@@ -28,6 +28,7 @@ router.post("/login", (req, res) => {
                 const token = generateToken(student);
                 res.status(200).json({
                     message: `Welcome ${student.username}!`,
+                    studentid: student.id,
                     token
                 });
             } else {
@@ -43,7 +44,7 @@ function generateToken(student) {
     const payload = {
         subject: student.id,
         username: student.username,
-        userid: student.id
+        studentid: student.id
     };
 
     const options = {
