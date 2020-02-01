@@ -6,6 +6,7 @@ exports.up = function(knex) {
         students.string("request_details").notNullable();
         students.integer("creatorId").notNullable();
         students.string("helperId");
+        students.boolean("resolved");
     });
 };
 

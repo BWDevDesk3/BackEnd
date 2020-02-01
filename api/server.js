@@ -4,12 +4,14 @@ const helmet = require("helmet");
 const authenticate = require("../auth/authenticate-middleware.js");
 const authRouter = require("../auth/auth-router.js");
 const studentsRouter = require("../students/students-router.js");
+const requestsRouter = require("../requests/request-router.js");
 const server = express();
 server.use(helmet());
 server.use(cors());
 server.use(express.json());
 server.use("/api/auth/students", authRouter);
 server.use("/api/students", authenticate, studentsRouter);
+server.use("/api/requests", authenticate, requestsRouter);
 
 server.get("/", (req, res) => {
     res.status(200).json({ api: "up" });
