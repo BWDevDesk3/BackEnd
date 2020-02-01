@@ -4,7 +4,8 @@ module.exports = {
     add,
     find,
     findBy,
-    findById
+    findById,
+    getStudentRequests
 };
 
 function find() {
@@ -25,4 +26,16 @@ function findById(id) {
     return db("students")
         .where({ id })
         .first();
+}
+
+function getStudentRequests(studentId) {
+    return db("requests as r")
+        .join("students as s", "s.id", "r.creatorId")
+        .select(
+            "r.id",
+            "r.request_subject",
+            "r.request_details",
+            "s.id as RequestCreator"
+        )
+        .where("r.creatorId", studentId);
 }
