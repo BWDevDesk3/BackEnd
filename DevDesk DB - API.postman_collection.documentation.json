@@ -1,0 +1,481 @@
+{
+	"info": {
+		"_postman_id": "a6fd5d5f-e808-42cb-8d6c-2c770e513135",
+		"name": "DevDesk DB / API",
+		"description": "# Introduction\nDevDesk Que API is created to feed the front end DeskDesk UI. The API allows for the registration of users, and adding of request records.\n\n# Overview\nbuilt with Node.js - db/api using express & knex\n\n# Authentication\nLogin with JwT token\n\n# Error Codes\ncommon error codes\n\n# Rate limit\nNo rate limit imposed by application - See herokuapp for possible limitations.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/auth/students/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "/api/auth/students/register",
+					"path": [
+						"api",
+						"auth",
+						"students",
+						"register"
+					]
+				},
+				"description": "ADD Student user Registration"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "/api/auth/students/register",
+							"path": [
+								"api",
+								"auth",
+								"students",
+								"register"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "/api/auth/students/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "/api/auth/students/login",
+					"path": [
+						"api",
+						"auth",
+						"students",
+						"login"
+					]
+				},
+				"description": "LOGIN Student user Login"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "/api/auth/students/login",
+							"path": [
+								"api",
+								"auth",
+								"students",
+								"login"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "/api/students",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "/api/students",
+					"path": [
+						"api",
+						"students"
+					]
+				},
+				"description": "GET Student User List"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "/api/students",
+							"path": [
+								"api",
+								"students"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "api/students/id/requests",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "api/students/id/requests",
+					"host": [
+						"api"
+					],
+					"path": [
+						"students",
+						"id",
+						"requests"
+					]
+				},
+				"description": "GET all Requests by Student"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "api/students/id/requests",
+							"host": [
+								"api"
+							],
+							"path": [
+								"students",
+								"id",
+								"requests"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "api/requests/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "api/requests/",
+					"host": [
+						"api"
+					],
+					"path": [
+						"requests",
+						""
+					]
+				},
+				"description": "ADD Request Record"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "api/requests/",
+							"host": [
+								"api"
+							],
+							"path": [
+								"requests",
+								""
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "api/requests/",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "api/requests/",
+					"host": [
+						"api"
+					],
+					"path": [
+						"requests",
+						""
+					]
+				},
+				"description": "GET Request List"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "api/requests/",
+							"host": [
+								"api"
+							],
+							"path": [
+								"requests",
+								""
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "api/requests/id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "api/requests/id",
+					"host": [
+						"api"
+					],
+					"path": [
+						"requests",
+						"id"
+					]
+				},
+				"description": "GET Request by ID"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "api/requests/id",
+							"host": [
+								"api"
+							],
+							"path": [
+								"requests",
+								"id"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "api/requests/id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "api/requests/id",
+					"host": [
+						"api"
+					],
+					"path": [
+						"requests",
+						"id"
+					]
+				},
+				"description": "UPDATE request by ID"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "api/requests/id",
+							"host": [
+								"api"
+							],
+							"path": [
+								"requests",
+								"id"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "api/requests/id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "api/requests/id",
+					"host": [
+						"api"
+					],
+					"path": [
+						"requests",
+						"id"
+					]
+				},
+				"description": "DELETE request by ID"
+			},
+			"response": [
+				{
+					"name": "Default",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "api/requests/id",
+							"host": [
+								"api"
+							],
+							"path": [
+								"requests",
+								"id"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a4de40c0-8b21-4288-b2e2-50087740eeb7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6837f302-4736-4bf8-b28c-7cc88951ef42",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

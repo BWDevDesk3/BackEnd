@@ -7,8 +7,8 @@ router.post("/", (req, res) => {
     requests
         .insert(req.body)
 
-    .then(student => {
-        res.status(201).json(student);
+    .then(request => {
+        res.status(201).json(request);
     })
 
     .catch(err => {
@@ -90,9 +90,9 @@ router.put("/:id", validateRequestId, (req, res) => {
 
     const data = req.body;
 
-    if (!data.description || !data.subject) {
+    if (!data) {
         res.status(400).json({
-            errorMessage: "Please provide subject and description for the request."
+            errorMessage: "Please provide updated data for the request."
         });
     } else {
         requests
@@ -121,7 +121,8 @@ router.put("/:id", validateRequestId, (req, res) => {
 function validateRequestId(req, res, next) {
     const id = req.params.id;
 
-    db.getById(id)
+    requests
+        .getById(id)
 
     .then(post => {
         if (!post) {
