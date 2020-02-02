@@ -1,6 +1,6 @@
 const requests = require("./request-model.js");
 const express = require("express");
-const validateRequestId = require("./request-middleware.js");
+const { validateRequestId } = require("./request-middleware.js");
 const router = express.Router();
 
 router.post("/", (req, res) => {

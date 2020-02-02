@@ -1,8 +1,6 @@
 const Students = require("./students-model.js");
 
 function validateStudentId(req, res, next) {
-    // do your magic
-
     const id = req.params.id;
 
     Students.findById(id)

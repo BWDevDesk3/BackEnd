@@ -1,16 +1,15 @@
-const requests = require("./requests-model.js");
+const Requests = require("./request-model.js");
 
 function validateRequestId(req, res, next) {
     const id = req.params.id;
 
-    requests
-        .getById(id)
+    Requests.getById(id)
 
-    .then(post => {
-        if (!post) {
+    .then(request => {
+        if (!request) {
             res.status(400).json({ message: "Invalid Request id." });
         } else {
-            req.post = post;
+            req.request = request;
 
             next();
         }
