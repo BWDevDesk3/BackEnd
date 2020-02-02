@@ -10,11 +10,11 @@ const server = express();
 server.use(helmet());
 server.use(cors());
 server.use(express.json());
-server.use("/api/auth", authRouter);
+server.use("/api/auth/helpers", authRouter);
 server.use("/api/helpers", authenticate, helpersRouter);
 
 server.get("/", (req, res) => {
-    res.status(200).json({ api: "It's Alive!" });
+    res.status(200).json({ api: "It's alive!" });
 });
 
 module.exports = server;

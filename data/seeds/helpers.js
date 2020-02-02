@@ -1,13 +1,11 @@
+const bcrypt = require('bcryptjs');
 
-exports.seed = function(knex) {
-  // Deletes ALL existing entries
-  return knex('table_name').del()
+exports.seed = function(knex, Promise) {
+  return knex('helpers').del()
     .then(function () {
-      // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
+      return knex('helpers').insert([
+        {id: 1, username: 'helper1', password: bcrypt.hashSync('password', 10)},
+        {id: 2, username: 'helper2', password: bcrypt.hashSync('password', 10)}
       ]);
     });
 };
