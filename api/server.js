@@ -12,9 +12,26 @@ server.use(express.json());
 server.use("/api/auth/students", authRouter);
 server.use("/api/students", authenticate, studentsRouter);
 server.use("/api/requests", authenticate, requestsRouter);
+const lookup = require("./reqcat-model.js");
 
 server.get("/", (req, res) => {
     res.status(200).json({ api: "up" });
 });
 
+server.get("/api/lookup", (req, res) => {
+    lookup
+        .get()
+
+    .then(lookupcat => {
+        res.status(200).json(lookupcat);
+    })
+
+    .catch(error => {
+        console.log("error on GET /api/lookup/", error);
+
+        res.status(500).json({
+            errorMessage: "The lookup information could not be retrieved."
+        });
+    });
+});
 module.exports = server;
