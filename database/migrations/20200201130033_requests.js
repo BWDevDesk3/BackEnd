@@ -2,10 +2,10 @@ exports.up = function(knex) {
     return knex.schema.createTable("requests", requests => {
         requests.increments();
         requests
-            .integer("request_catagory")
+            .integer("request_category")
             .notNullable()
             .references("id")
-            .inTable("requestcatagory")
+            .inTable("requestcategory")
             .onDelete("CASCADE")
             .onUpdate("CASCADE");
         requests.string("request_date").notNullable();
