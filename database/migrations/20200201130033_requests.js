@@ -20,10 +20,7 @@ exports.up = function(knex) {
             .onDelete("CASCADE")
             .onUpdate("CASCADE");
         requests.integer("helperId");
-        requests
-            .boolean("resolved")
-            .notNullable()
-            .defaultTo(0);
+        requests.boolean("resolved").defaultTo(0);
     });
 };
 
