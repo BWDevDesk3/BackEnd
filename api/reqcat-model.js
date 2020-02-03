@@ -9,17 +9,17 @@ module.exports = {
 };
 
 function get() {
-    return db("requestcatagory");
+    return db("requestcategory");
 }
 
 function getById(id) {
-    return db("requestcatagory")
+    return db("requestcategory")
         .where({ id })
         .first();
 }
 
 function insert(request) {
-    return db("requestcatagory")
+    return db("requestcategory")
         .insert(request)
         .then(ids => {
             return getById(ids[0]);
@@ -27,13 +27,13 @@ function insert(request) {
 }
 
 function update(id, changes) {
-    return db("requestcatagory")
+    return db("requestcategory")
         .where({ id })
         .update(changes);
 }
 
 function remove(id) {
-    return db("requestcatagory")
+    return db("requestcategory")
         .where("id", id)
         .del();
 }

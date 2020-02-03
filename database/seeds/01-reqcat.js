@@ -1,22 +1,22 @@
 exports.seed = function(knex) {
     // Deletes ALL existing entries
-    return knex("requestcatagory")
+    return knex("requestcategory")
         .del()
         .then(function() {
             // Inserts seed entries
-            return knex("requestcatagory").insert([
-                { id: 1, catagory: "Javascript" },
-                { id: 2, catagory: "CSS" },
-                { id: 3, catagory: "NODE" },
-                { id: 4, catagory: "React" },
-                { id: 5, catagory: "REDUX" },
-                { id: 6, catagory: "JSON" },
-                { id: 7, catagory: "Python" },
-                { id: 8, catagory: "GIT" },
-                { id: 9, catagory: "Postman" },
-                { id: 10, catagory: "Yarn" },
-                { id: 11, catagory: "Library Installation" },
-                { id: 12, catagory: "App Deployment" }
+            return knex("requestcategory").insert([
+                { id: 1, category: "Javascript" },
+                { id: 2, category: "CSS" },
+                { id: 3, category: "NODE" },
+                { id: 4, category: "React" },
+                { id: 5, category: "REDUX" },
+                { id: 6, category: "JSON" },
+                { id: 7, category: "Python" },
+                { id: 8, category: "GIT" },
+                { id: 9, category: "Postman" },
+                { id: 10, category: "Yarn" },
+                { id: 11, category: "Library Installation" },
+                { id: 12, category: "App Deployment" }
             ]);
         });
 };
