@@ -28,10 +28,12 @@ router.get("/:id/requests", validateStudentId, (req, res) => {
 router.get("/:id/", validateStudentId, (req, res) => {
     const id = req.params.id;
 
-    Students.find(id)
+    Students.findById(id)
 
     .then(student => {
-        res.status(200).json(student);
+        res
+            .status(200)
+            .json({ studentid: student.id, username: student.username });
     })
 
     .catch(err => {
