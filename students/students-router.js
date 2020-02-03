@@ -38,7 +38,7 @@ router.get("/:id/", validateStudentId, (req, res) => {
         console.log(err);
 
         res.status(500).json({
-            message: "Error retrieving posts."
+            message: "Error retrieving Student."
         });
     });
 });
