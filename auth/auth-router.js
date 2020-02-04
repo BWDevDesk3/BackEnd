@@ -73,7 +73,8 @@ router.post("/helpers/login", (req, res) => {
 
             res.status(200).json({
                 message: `Welcome ${helper.username}!`,
-
+                username: helper.username,
+                helperid: helper.id,
                 token
             });
         } else {
