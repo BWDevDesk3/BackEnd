@@ -50,7 +50,7 @@ exports.seed = function(knex) {
                 },
                 {
                     id: 5,
-                    request_category: "1",
+                    request_category: "10",
                     request_date: "01/05/2020",
                     request_title: "Request 5",
                     request_details: "I'm pretty sure I found a bug bill gates missed!",
@@ -96,8 +96,8 @@ exports.seed = function(knex) {
                     id: 9,
                     request_category: "2",
                     request_date: "01/09/2020",
-                    request_title: "Javescript, Lack of Java something",
-                    request_details: "My dog ate my probelms",
+                    request_title: "Javascript, Lack of Java something",
+                    request_details: "My dog ate my problems",
                     request_stepstaken: "As few as possible while still achieving the same goal.",
                     creatorId: "9",
                     helperId: "",
@@ -105,7 +105,7 @@ exports.seed = function(knex) {
                 },
                 {
                     id: 10,
-                    request_category: "2",
+                    request_category: "11",
                     request_date: "01/10/2020",
                     request_title: "Wow, this might have been a bad Idea",
                     request_details: "Install this, Dependencies that, Can I just code now?",
@@ -160,7 +160,7 @@ exports.seed = function(knex) {
                 },
                 {
                     id: 15,
-                    request_category: "3",
+                    request_category: "12",
                     request_date: "01/15/2020",
                     request_title: "99 Problems",
                     request_details: "I wrote this 3ms ago, Can I get some help already?!",
@@ -215,7 +215,7 @@ exports.seed = function(knex) {
                 },
                 {
                     id: 20,
-                    request_category: "4",
+                    request_category: "10",
                     request_date: "01/20/2020",
                     request_title: "Question 2",
                     request_details: "My code is trying to kill me!",
@@ -270,7 +270,7 @@ exports.seed = function(knex) {
                 },
                 {
                     id: 25,
-                    request_category: "5",
+                    request_category: "11",
                     request_date: "01/25/2020",
                     request_title: "Isnt it your job to do this?",
                     request_details: "It's 2AM, do you know where your code is?",
@@ -369,7 +369,7 @@ exports.seed = function(knex) {
                 },
                 {
                     id: 34,
-                    request_category: "7",
+                    request_category: "12",
                     request_date: "01/06/2020",
                     request_title: "The Fifth One!",
                     request_details: "If I had a problem for every time...",
@@ -424,7 +424,7 @@ exports.seed = function(knex) {
                 },
                 {
                     id: 39,
-                    request_category: "8",
+                    request_category: "10",
                     request_date: "01/11/2020",
                     request_title: "The Tenth One!",
                     request_details: "Ok, All I have to do is make 4 more of these",
@@ -479,7 +479,7 @@ exports.seed = function(knex) {
                 },
                 {
                     id: 44,
-                    request_category: "9",
+                    request_category: "11",
                     request_date: "01/16/2020",
                     request_title: "The Boring One!",
                     request_details: "I have Problems, But i dont think their the same as everyone else's problems",
