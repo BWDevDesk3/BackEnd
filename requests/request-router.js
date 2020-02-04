@@ -18,7 +18,6 @@ router.post("/", (req, res) => {
         res.status(500).json({ message: "Error adding Request" });
     });
 });
-
 router.get("/", (req, res) => {
     requests
         .get()

@@ -44,5 +44,38 @@ router.get("/:id/", validateStudentId, (req, res) => {
         });
     });
 });
+var multer = require("multer");
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "./public/students/images/");
+    },
+    filename: (req, file, cb) => {
+        const id = req.params.id;
+        console.log(file);
+        var filetype = "";
+        if (file.mimetype === "image/gif") {
+            filetype = "gif";
+        }
+        if (file.mimetype === "image/png") {
+            filetype = "png";
+        }
+        if (file.mimetype === "image/jpeg") {
+            filetype = "jpg";
+        }
+        cb(null, "image-" + id + "." + filetype);
+    }
+});
+var upload = multer({ storage: storage });
+router.post("/:id/image", upload.single("file"), function(req, res, next) {
+    console.log(req.file);
+    if (!req.file) {
+        res.status(500);
+        return next();
+    }
+    res.json({
+        fileUrl: "https://devdeskdb.herokuapp.com/public/students/images/" +
+            req.file.filename
+    });
+});
 
 module.exports = router;
