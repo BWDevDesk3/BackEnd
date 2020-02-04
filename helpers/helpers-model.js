@@ -7,7 +7,8 @@ module.exports = {
 
     findBy,
 
-    findById
+    findById,
+    getHelperRequests
 };
 
 function find() {
@@ -29,4 +30,16 @@ function findById(id) {
         .where({ id })
 
     .first();
+}
+
+function getHelperRequests(id) {
+    return db("requests as r")
+        .join("helpers as h", "h.id", "r.helperid")
+        .select(
+            "r.id",
+            "r.request_category",
+            "r.request_details",
+            "h.id as RequestHelper"
+        )
+        .where("r.helperId", id);
 }
