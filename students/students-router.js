@@ -24,7 +24,7 @@ router.get("/:id/requests", validateStudentId, (req, res) => {
         console.log(err);
 
         res.status(500).json({
-            message: "Error retrieving posts."
+            message: "Error retrieving student requests."
         });
     });
 });
@@ -69,7 +69,7 @@ router.post("/:id/image", upload.single("file"), function(req, res, next) {
         return next();
     }
     res.json({
-        Url: `https://devdeskdb.herokuapp.com/api/students/${id}/image` +
+        Url: `https://devdeskdb.herokuapp.com/api/students/${id}/image/` +
             req.file.filename
     });
 });

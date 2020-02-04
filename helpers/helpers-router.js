@@ -67,7 +67,7 @@ router.post("/:id/image", upload.single("file"), function(req, res, next) {
         return next();
     }
     res.json({
-        Url: `https://devdeskdb.herokuapp.com/api/helpers/${id}/image` +
+        Url: `https://devdeskdb.herokuapp.com/api/helpers/${id}/image/` +
             req.file.filename
     });
 });

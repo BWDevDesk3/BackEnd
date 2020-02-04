@@ -38,8 +38,12 @@ function getHelperRequests(id) {
         .select(
             "r.id",
             "r.request_category",
+            "r.request_date",
+            "request_title",
             "r.request_details",
-            "h.id as RequestHelper"
+            "r.creatorid",
+            "h.id as helperid",
+            "r.resolved"
         )
         .where("r.helperId", id);
 }
