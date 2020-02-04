@@ -41,8 +41,12 @@ function getStudentRequests(id) {
         .select(
             "r.id",
             "r.request_category",
+            "r.request_date",
+            "request_title",
             "r.request_details",
-            "s.id as RequestCreator"
+            "s.id as creatorid",
+            "r.helperId",
+            "r.resolved"
         )
         .where("r.creatorId", id);
 }
