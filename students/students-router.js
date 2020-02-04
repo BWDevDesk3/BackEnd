@@ -63,13 +63,14 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage });
 router.post("/:id/image", upload.single("file"), function(req, res, next) {
+    const id = req.params.id;
     console.log(req.file);
     if (!req.file) {
         res.status(500);
         return next();
     }
     res.json({
-        fileUrl: "https://devdeskdb.herokuapp.com/public/students/images/" +
+        fileUrl: `https://devdeskdb.herokuapp.com/api/students/${id}/image` +
             req.file.filename
     });
 });
