@@ -9,7 +9,7 @@ exports.seed = function(knex) {
                     request_category: "1",
                     request_date: "01/01/2020",
                     request_title: "Request 1",
-                    request_details: "Forget Huston, I have Problems!",
+                    request_details: "Forget Houston, I have Problems!",
                     request_stepstaken: "As few as possible while still achieving the same goal.",
                     creatorId: "1",
                     helperId: "",
