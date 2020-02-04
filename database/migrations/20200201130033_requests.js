@@ -3,7 +3,6 @@ exports.up = function(knex) {
         requests.increments();
         requests
             .integer("request_category")
-            .notNullable()
             .references("id")
             .inTable("requestcategory")
             .onDelete("CASCADE")

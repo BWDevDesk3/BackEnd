@@ -4,6 +4,7 @@ const { validateRequestId } = require("./request-middleware.js");
 const router = express.Router();
 
 router.post("/", (req, res) => {
+    console.log(req.body);
     requests
         .insert(req.body)
 
