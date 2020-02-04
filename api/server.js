@@ -10,7 +10,7 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 server.use("/api/auth/students", authRouter);
-server.use("/api/students", authenticate, studentsRouter);
+server.use("/api/students", studentsRouter);
 server.use("/api/requests", authenticate, requestsRouter);
 const lookup = require("./reqcat-model.js");
 

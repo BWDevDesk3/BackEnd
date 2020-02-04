@@ -1,4 +1,5 @@
-const router = require("express").Router();
+const express = require("express");
+const router = express();
 const { validateStudentId } = require("./students-middleware");
 const Students = require("./students-model.js");
 
@@ -44,6 +45,7 @@ router.get("/:id/", validateStudentId, (req, res) => {
         });
     });
 });
+const path = require("path");
 var multer = require("multer");
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -53,16 +55,10 @@ var storage = multer.diskStorage({
         const id = req.params.id;
         console.log(file);
         var filetype = "";
-        if (file.mimetype === "image/gif") {
-            filetype = "gif";
-        }
-        if (file.mimetype === "image/png") {
-            filetype = "png";
-        }
         if (file.mimetype === "image/jpeg") {
             filetype = "jpg";
         }
-        cb(null, "image-" + id + "." + filetype);
+        cb(null, "student-" + id + "." + filetype);
     }
 });
 var upload = multer({ storage: storage });
@@ -76,6 +72,12 @@ router.post("/:id/image", upload.single("file"), function(req, res, next) {
         fileUrl: "https://devdeskdb.herokuapp.com/public/students/images/" +
             req.file.filename
     });
+});
+router.get("/:id/image", (req, res) => {
+    const id = req.params.id;
+    res.sendFile(
+        path.join(__dirname, `../public/students/images/image-${id}.jpg`)
+    );
 });
 
 module.exports = router;
