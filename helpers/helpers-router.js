@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express();
-const { validateStudentId } = require("./students-middleware");
-const Students = require("./students-model.js");
+const { validateHelperId } = require("./helpers-middleware");
+const Helpers = require("./helpers-model.js");
 const path = require("path");
 var multer = require("multer");
-
 router.get("/", (req, res) => {
-    Students.find()
-        .then(students => {
-            res.json(students);
-        })
-        .catch(err => res.send(err));
-});
+    Helpers.find()
 
-router.get("/:id/requests", validateStudentId, (req, res) => {
-    Students.getStudentRequests(req.student.id)
+    .then(helpers => {
+        res.json(helpers);
+    })
+
+    .catch(err => res.send(err));
+});
+router.get("/:id/requests", validateHelperId, (req, res) => {
+    Helpers.getHelperRequests(req.helper.id)
 
     .then(requests => {
         res.status(200).json(requests);
@@ -24,33 +24,31 @@ router.get("/:id/requests", validateStudentId, (req, res) => {
         console.log(err);
 
         res.status(500).json({
-            message: "Error retrieving posts."
+            message: "Error retrieving helper requests"
         });
     });
 });
-router.get("/:id/", validateStudentId, (req, res) => {
+router.get("/:id/", validateHelperId, (req, res) => {
     const id = req.params.id;
 
-    Students.findById(id)
+    Helper.findById(id)
 
-    .then(student => {
-        res
-            .status(200)
-            .json({ studentid: student.id, username: student.username });
+    .then(helper => {
+        res.status(200).json({ helperid: helper.id, username: helper.username });
     })
 
     .catch(err => {
         console.log(err);
 
         res.status(500).json({
-            message: "Error retrieving Student."
+            message: "Error retrieving Helper"
         });
     });
 });
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "./public/students/images/");
+        cb(null, "./public/helpers/images/");
     },
     filename: (req, file, cb) => {
         const id = req.params.id;
@@ -58,7 +56,7 @@ var storage = multer.diskStorage({
         if (file.mimetype === "image/jpeg") {
             filetype = "jpg";
         }
-        cb(null, "student-" + id + "." + filetype);
+        cb(null, "helper-" + id + "." + filetype);
     }
 });
 var upload = multer({ storage: storage });
@@ -69,14 +67,14 @@ router.post("/:id/image", upload.single("file"), function(req, res, next) {
         return next();
     }
     res.json({
-        Url: `https://devdeskdb.herokuapp.com/api/students/${id}/image` +
+        Url: `https://devdeskdb.herokuapp.com/api/helpers/${id}/image` +
             req.file.filename
     });
 });
 router.get("/:id/image", (req, res) => {
     const id = req.params.id;
     res.sendFile(
-        path.join(__dirname, `../public/students/images/student-${id}.jpg`)
+        path.join(__dirname, `../public/helpers/images/helper-${id}.jpg`)
     );
 });
 
