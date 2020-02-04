@@ -76,7 +76,7 @@ router.post("/:id/image", upload.single("file"), function(req, res, next) {
 router.get("/:id/image", (req, res) => {
     const id = req.params.id;
     res.sendFile(
-        path.join(__dirname, `../public/students/images/image-${id}.jpg`)
+        path.join(__dirname, `../public/students/images/student-${id}.jpg`)
     );
 });
 
