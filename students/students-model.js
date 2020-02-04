@@ -5,7 +5,8 @@ module.exports = {
     find,
     findBy,
     findById,
-    getStudentRequests
+    getStudentRequests,
+    addimage
 };
 
 function find() {
@@ -28,14 +29,20 @@ function findById(id) {
         .first();
 }
 
-function getStudentRequests(studentId) {
+function addimage(id, file) {
+    return db("students")
+        .where({ id })
+        .update({ file });
+}
+
+function getStudentRequests(id) {
     return db("requests as r")
         .join("students as s", "s.id", "r.creatorId")
         .select(
             "r.id",
-            "r.request_subject",
+            "r.request_category",
             "r.request_details",
             "s.id as RequestCreator"
         )
-        .where("r.creatorId", studentId);
+        .where("r.creatorId", id);
 }

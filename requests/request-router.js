@@ -4,6 +4,7 @@ const { validateRequestId } = require("./request-middleware.js");
 const router = express.Router();
 
 router.post("/", (req, res) => {
+    console.log(req.body);
     requests
         .insert(req.body)
 
@@ -17,7 +18,6 @@ router.post("/", (req, res) => {
         res.status(500).json({ message: "Error adding Request" });
     });
 });
-
 router.get("/", (req, res) => {
     requests
         .get()

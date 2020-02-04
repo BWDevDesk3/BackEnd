@@ -3,13 +3,14 @@ exports.up = function(knex) {
         requests.increments();
         requests
             .integer("request_category")
-            .notNullable()
             .references("id")
             .inTable("requestcategory")
             .onDelete("CASCADE")
             .onUpdate("CASCADE");
         requests.string("request_date").notNullable();
+        requests.string("request_title").notNullable();
         requests.string("request_details").notNullable();
+        requests.string("request_stepstaken").notNullable();
         requests
             .integer("creatorId")
             .notNullable()
@@ -18,10 +19,7 @@ exports.up = function(knex) {
             .onDelete("CASCADE")
             .onUpdate("CASCADE");
         requests.integer("helperId");
-        requests
-            .boolean("resolved")
-            .notNullable()
-            .defaultTo(0);
+        requests.boolean("resolved").defaultTo(0);
     });
 };
 
