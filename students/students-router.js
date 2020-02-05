@@ -36,7 +36,11 @@ router.get("/:id/", validateStudentId, (req, res) => {
     .then(student => {
         res
             .status(200)
-            .json({ studentid: student.id, username: student.username });
+            .json({
+                studentid: student.id,
+                username: student.username,
+                email: student.email
+            });
     })
 
     .catch(err => {

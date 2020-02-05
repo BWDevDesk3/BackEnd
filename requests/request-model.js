@@ -6,15 +6,29 @@ module.exports = {
     insert,
     update,
     remove,
-    insertemail
+    insertemail,
+    getRequestEmail
 };
 
 function get() {
     return db("requests");
 }
 
+function getRequestEmail(id) {
+    return db("requests as r")
+        .join("request_email as e", "r.id", "e.request_id")
+        .select("e.id", "e.to", "e.from", "e.subject", "e.text")
+        .where("e.request_id", id);
+}
+
 function getById(id) {
     return db("requests")
+        .where({ id })
+        .first();
+}
+
+function getByEmailId(id) {
+    return db("request_email")
         .where({ id })
         .first();
 }
@@ -31,7 +45,7 @@ function insertemail(requestemail) {
     return db("request_email")
         .insert(requestemail)
         .then(ids => {
-            return getById(ids[0]);
+            return getByEmailId(ids[0]);
         });
 }
 

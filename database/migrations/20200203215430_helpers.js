@@ -11,6 +11,7 @@ exports.up = function(knex) {
         .unique();
 
         helpers.string("password", 255).notNullable();
+        helpers.string("email");
     });
 };
 
