@@ -33,6 +33,7 @@ router.post("/students/login", (req, res) => {
                     message: `Welcome ${student.username}!`,
                     username: student.username,
                     studentid: student.id,
+                    email: student.email,
                     token
                 });
             } else {
@@ -73,6 +74,7 @@ router.post("/helpers/login", (req, res) => {
                     message: `Welcome ${helper.username}!`,
                     username: helper.username,
                     helperid: helper.id,
+                    email: helper.email,
                     token
                 });
             } else {
