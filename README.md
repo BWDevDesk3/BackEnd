@@ -186,6 +186,26 @@ Response body JSON Array:
 {DeletedID}
 Information:
 Authorization via valid JWT token is required on this endpoint. UPDATES records in the REQUESTS Table Based on the ID_Value included in the API get request for a particular REQUEST.
+.post to https://devdeskdb.herokuapp.com/api/requests/:id/image/
+POSTMessage Parameters:
+requests/{REQUEST_id_value}/image 
+POST Message Header:
+{“authorization”:”TOKEN_VALUE”}
+POST Message body JSON:
+{“file:”file.jpg”}
+Information:
+Authorization via valid JWT token is required on this endpoint. Post to this endpoint stores an image in server file system, and returns the file path.
+.get to https://devdeskdb.herokuapp.com/api/requests/:id/image
+GET Message Parameters:
+requests/{REQUEST_id_value}/image 
+GET Message Header:
+{“authorization”:”TOKEN_VALUE”}
+GET Message body JSON:
+NONE
+Response body FILE:
+[request-id.jpg]
+Information:
+Authorization via valid JWT token is required on this endpoint. Serves a single .jpg from server.
 
 .get to https://devdeskdb.herokuapp.com/api/lookup 
 GET Message Header:
