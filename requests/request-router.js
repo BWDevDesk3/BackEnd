@@ -2,7 +2,8 @@ const requests = require("./request-model.js");
 const express = require("express");
 const { validateRequestId } = require("./request-middleware.js");
 const router = express.Router();
-
+const path = require("path");
+var multer = require("multer");
 router.post("/", (req, res) => {
     console.log(req.body);
     requests
@@ -116,6 +117,38 @@ router.put("/:id", validateRequestId, (req, res) => {
             });
         });
     }
+});
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "./public/requests/images/");
+    },
+    filename: (req, file, cb) => {
+        const id = req.params.id;
+        var filetype = "";
+        if (file.mimetype === "image/jpeg") {
+            filetype = "jpg";
+        }
+        cb(null, "request-" + id + "." + filetype);
+    }
+});
+var upload = multer({ storage: storage });
+router.post("/:id/image", upload.single("file"), function(req, res, next) {
+    const id = req.params.id;
+    if (!req.file) {
+        res.status(500);
+        return next();
+    }
+    res.json({
+        Url: `https://devdeskdb.herokuapp.com/api/requests/${id}/image/` +
+            req.file.filename
+    });
+});
+router.get("/:id/image", (req, res) => {
+    const id = req.params.id;
+    res.sendFile(
+        path.join(__dirname, `../public/requests/images/request-${id}.jpg`)
+    );
 });
 
 module.exports = router;
