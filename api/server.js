@@ -30,10 +30,8 @@ server.get("/api/lookup", (req, res) => {
     })
 
     .catch(error => {
-        console.log("error on GET /api/lookup/", error);
-
         res.status(500).json({
-            errorMessage: "The lookup information could not be retrieved."
+            Message: "The lookup information could not be retrieved."
         });
     });
 });

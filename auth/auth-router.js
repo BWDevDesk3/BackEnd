@@ -7,26 +7,23 @@ const secrets = require("../config/secrets.js");
 
 router.post("/students/register", (req, res) => {
     let student = req.body;
-
-    const hash = bcrypt.hashSync(student.password, 10);
+    const hash = bcrypt.hashSync(student.password, 10); // 2 ^ n
     student.password = hash;
+
     Students.add(student)
-
-    .then(saved => {
-        res.status(201).json(saved);
-    })
-
-    .catch(error => {
-        res.status(401).json({
-            message: "A Student with that Username Exsists in the system",
-            error
+        .then(saved => {
+            res.status(201).json(saved);
+        })
+        .catch(error => {
+            res.status(401).json({
+                message: "A Student with that Username Exists in the system",
+                error
+            });
         });
-    });
 });
 
 router.post("/students/login", (req, res) => {
     let { username, password } = req.body;
-
     Students.findBy({ username })
         .first()
         .then(student => {
@@ -49,50 +46,42 @@ router.post("/students/login", (req, res) => {
 
 router.post("/helpers/register", (req, res) => {
     let helper = req.body;
-
-    const hash = bcrypt.hashSync(helper.password, 10);
-
+    const hash = bcrypt.hashSync(helper.password, 10); // 2 ^ n
     helper.password = hash;
 
     Helpers.add(helper)
-
-    .then(saved => {
-        res.status(201).json(saved);
-    })
-
-    .catch(error => {
-        res.status(401).json({
-            message: "A Helper with that Username Exsists in the system",
-            error
+        .then(saved => {
+            res.status(201).json(saved);
+        })
+        .catch(error => {
+            res.status(401).json({
+                message: "A Helper with that Username Exists in the system",
+                error
+            });
         });
-    });
 });
 
 router.post("/helpers/login", (req, res) => {
     let { username, password } = req.body;
-
     Helpers.findBy({ username })
+        .first()
+        .then(helper => {
+            if (helper && bcrypt.compareSync(password, helper.password)) {
+                const token = generateToken(helper);
 
-    .first()
-
-    .then(helper => {
-        if (helper && bcrypt.compareSync(password, helper.password)) {
-            const token = generateToken(helper);
-
-            res.status(200).json({
-                message: `Welcome ${helper.username}!`,
-                username: helper.username,
-                helperid: helper.id,
-                token
-            });
-        } else {
-            res.status(401).json({ message: "Failed to Authenticate." });
-        }
-    })
-
-    .catch(error => {
-        res.status(500).json(error);
-    });
+                res.status(200).json({
+                    message: `Welcome ${helper.username}!`,
+                    username: helper.username,
+                    helperid: helper.id,
+                    token
+                });
+            } else {
+                res.status(401).json({ message: "Failed to Authenticate." });
+            }
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        });
 });
 
 function generateToken(student) {
