@@ -1,7 +1,9 @@
 const requests = require("./request-model.js");
 const express = require("express");
+const secrets = require("../config/secrets.js");
 const { validateRequestId } = require("./request-middleware.js");
 const router = express.Router();
+const axios = require("axios");
 const path = require("path");
 var multer = require("multer");
 router.post("/", (req, res) => {
@@ -149,6 +151,27 @@ router.get("/:id/image", (req, res) => {
     res.sendFile(
         path.join(__dirname, `../public/requests/images/request-${id}.jpg`)
     );
+});
+
+router.post("/:id/email", (req, res) => {
+    const requestid = req.params.id;
+    const email = req.body;
+    console.log(email);
+    const sgMail = require("@sendgrid/mail");
+    requests
+        .insertemail(req.body)
+
+    .then(requestemail => {
+        sgMail.setApiKey(secrets.sendgridkey);
+        sgMail.send(email);
+        res.status(200).json({ message: "Email Sent" });
+    })
+
+    .catch(err => {
+        console.log(err);
+
+        res.status(500).json({ message: "Error adding Email to Database" });
+    });
 });
 
 module.exports = router;
