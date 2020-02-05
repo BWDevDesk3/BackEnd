@@ -5,7 +5,8 @@ module.exports = {
     getById,
     insert,
     update,
-    remove
+    remove,
+    insertemail
 };
 
 function get() {
@@ -21,6 +22,14 @@ function getById(id) {
 function insert(request) {
     return db("requests")
         .insert(request)
+        .then(ids => {
+            return getById(ids[0]);
+        });
+}
+
+function insertemail(requestemail) {
+    return db("request_email")
+        .insert(requestemail)
         .then(ids => {
             return getById(ids[0]);
         });
