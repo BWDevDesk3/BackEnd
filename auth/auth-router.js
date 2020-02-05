@@ -9,14 +9,21 @@ router.post("/students/register", (req, res) => {
     let student = req.body;
     const hash = bcrypt.hashSync(student.password, 10); // 2 ^ n
     student.password = hash;
-
-    Students.add(student)
-        .then(saved => {
-            res.status(201).json(saved);
-        })
-        .catch(error => {
-            res.status(500).json(error);
-        });
+    if (!Students.findBy(student.username)) {
+        Students.add(student)
+            .then(saved => {
+                res.status(201).json(saved);
+            })
+            .catch(error => {
+                res
+                    .status(401)
+                    .json(error, { error: "An unexpected error has occured" });
+            });
+    } else {
+        res
+            .status(401)
+            .json({ message: "A Student with that username already exsists" });
+    }
 });
 
 router.post("/students/login", (req, res) => {
@@ -48,16 +55,21 @@ router.post("/helpers/register", (req, res) => {
     const hash = bcrypt.hashSync(helper.password, 10);
 
     helper.password = hash;
-
-    Helpers.add(helper)
-
-    .then(saved => {
-        res.status(201).json(saved);
-    })
-
-    .catch(error => {
-        res.status(500).json(error);
-    });
+    if (!Helpers.findBy(helper.username)) {
+        Helpers.add(helper)
+            .then(saved => {
+                res.status(201).json(saved);
+            })
+            .catch(error => {
+                res
+                    .status(401)
+                    .json(error, { error: "an unexpected error has occured" });
+            });
+    } else {
+        res
+            .status(401)
+            .json({ message: "A Helper with that username already exsists" });
+    }
 });
 
 router.post("/helpers/login", (req, res) => {
