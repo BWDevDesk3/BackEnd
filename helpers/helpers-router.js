@@ -34,7 +34,13 @@ router.get("/:id/", validateHelperId, (req, res) => {
     Helper.findById(id)
 
     .then(helper => {
-        res.status(200).json({ helperid: helper.id, username: helper.username });
+        res
+            .status(200)
+            .json({
+                helperid: helper.id,
+                username: helper.username,
+                email: helper.email
+            });
     })
 
     .catch(err => {
