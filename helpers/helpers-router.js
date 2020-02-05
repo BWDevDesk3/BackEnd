@@ -31,27 +31,24 @@ router.get("/:id/requests", validateHelperId, (req, res) => {
 router.get("/:id/", validateHelperId, (req, res) => {
     const id = req.params.id;
 
-    Helper.findById(id)
+    Helpers.findById(id)
 
     .then(helper => {
-        res
-            .status(200)
-            .json({
-                helperid: helper.id,
-                username: helper.username,
-                email: helper.email
-            });
+        res.status(200).json({
+            helperid: helper.id,
+            username: helper.username,
+            email: helper.email
+        });
     })
 
     .catch(err => {
         console.log(err);
 
         res.status(500).json({
-            message: "Error retrieving Helper"
+            message: "Error retrieving Helper."
         });
     });
 });
-
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "./public/helpers/images/");

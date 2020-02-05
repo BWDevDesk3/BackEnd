@@ -12,7 +12,7 @@ module.exports = {
 };
 
 function find() {
-    return db("helpers").select("id", "username");
+    return db("helpers").select("id", "username", "email");
 }
 
 function findBy(filter) {
@@ -28,8 +28,7 @@ async function add(helper) {
 function findById(id) {
     return db("helpers")
         .where({ id })
-
-    .first();
+        .first();
 }
 
 function getHelperRequests(id) {
