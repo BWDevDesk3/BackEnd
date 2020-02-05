@@ -156,21 +156,40 @@ router.get("/:id/image", (req, res) => {
 router.post("/:id/email", (req, res) => {
     const requestid = req.params.id;
     const email = req.body;
-    console.log(email);
     const sgMail = require("@sendgrid/mail");
+    req.body.request_id = requestid;
     requests
         .insertemail(req.body)
 
     .then(requestemail => {
         sgMail.setApiKey(secrets.sendgridkey);
         sgMail.send(email);
-        res.status(200).json({ message: "Email Sent" });
+        res.status(200).json({ message: "Email Sent", requestemail });
     })
 
     .catch(err => {
         console.log(err);
 
         res.status(500).json({ message: "Error adding Email to Database" });
+    });
+});
+
+router.get("/:id/email", (req, res) => {
+    const id = req.params.id;
+    requests
+        .getRequestEmail(id)
+
+    .then(request => {
+        res.status(200).json(request);
+    })
+
+    .catch(error => {
+        console.log("error on GET /api/requests/email", error);
+        res.status(500).json({ error, message: "an error occured" });
+
+        res.status(500).json({
+            errorMessage: "The request information could not be retrieved."
+        });
     });
 });
 
