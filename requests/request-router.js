@@ -104,26 +104,31 @@ router.delete("/:id", validateRequestId, (req, res) => {
         text: "Thank You for Sumbitting your request for assistance.\r\n Your ticket has been deleted from Dev Desk Queue, and will no longer be available for helpers to assign and resolve. We hope you found a solution to your issue. If you experiance this, or any issue in the future, Please feel free to submit another Dev Desk Queue Request Ticket.\r\n",
         from: "no-reply@sender.com"
     };
-    requests
-        .findById(id)
-        .then(student => {
-            emailmsg.to = student.email ? student.email : "test@test.com";
-            requests
-                .remove(id)
-                .then(request => {
-                    sgMail.setApiKey(secrets.sendgridkey);
-                    sgMail.send(emailmsg);
-                    res.status(201).json(request);
-                })
+    requests.getById(id).then(request => {
+        requests
+            .findById(request.creatorId)
+            .then(student => {
+                emailmsg.to = student.email ? student.email : "test@test.com";
+                requests
+                    .remove(id)
+                    .then(request => {
+                        sgMail.setApiKey(secrets.sendgridkey);
+                        sgMail.send(emailmsg);
+                        res.status(201).json(request);
+                    })
 
-            .catch(err => {
-                console.log(err);
+                .catch(err => {
+                    console.log(err);
 
-                res.status(500).json({ message: "Error deleteing Request" });
-            });
-        })
-        .catch(err => res.status(500).json({ message: "Error fetching student" }));
+                    res.status(500).json({ message: "Error deleteing Request" });
+                });
+            })
+            .catch(err =>
+                res.status(500).json({ message: "Error fetching student" })
+            );
+    });
 });
+
 router.put("/:id", validateRequestId, (req, res) => {
     const id = req.params.id;
     const builtrequest = {
