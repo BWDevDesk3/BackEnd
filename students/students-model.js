@@ -44,6 +44,7 @@ function getStudentRequests(id) {
             "r.request_date",
             "request_title",
             "r.request_details",
+            "r.request_stepstaken",
             "s.id as creatorid",
             "r.helperId",
             "r.resolved"

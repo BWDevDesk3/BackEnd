@@ -40,6 +40,7 @@ function getHelperRequests(id) {
             "r.request_date",
             "request_title",
             "r.request_details",
+            "r.request_stepstaken",
             "r.creatorid",
             "h.id as helperid",
             "r.resolved"
