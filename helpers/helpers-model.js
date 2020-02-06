@@ -44,5 +44,6 @@ function getHelperRequests(id) {
             "h.id as helperid",
             "r.resolved"
         )
-        .where("r.helperId", id);
+        .where("r.helperId", id)
+        .orderBy("r.id", "asc");
 }
