@@ -1,12 +1,11 @@
 const requests = require("./request-model.js");
-const students = require("../students/students-model.js");
 const express = require("express");
 const secrets = require("../config/secrets.js");
 const { validateRequestId } = require("./request-middleware.js");
 const router = express.Router();
-const axios = require("axios");
 const path = require("path");
 var multer = require("multer");
+const sgMail = require("@sendgrid/mail");
 router.post("/", (req, res) => {
     const builtrequest = {
         request_category: req.body.request_category,
@@ -19,24 +18,23 @@ router.post("/", (req, res) => {
         resolved: req.body.resolved
     };
 
-    const sgMail = require("@sendgrid/mail");
     const emailmsg = {
         to: "test@test.com",
-        subject: "Dev Desk Help Request Ticket Added!",
-        text: "Thank You for Sumbitting your request for assistance, A helper will be in contact shortly. Included below is the contents of your ticket: \r\n" +
+        subject: "Dev Desk Help Request Ticket Submitted!",
+        text: "Thank You for Sumbitting your request for assistance! \r\n A helper will be in contact with you shortly. Included below is the contents of your Dev Desk Queue ticket: \r\n" +
             "\r\n Title: \r\n" +
             req.body.request_title +
             "\r\n Date:  \r\n" +
             req.body.request_date +
             "\r\n Deatils: \r\n" +
             req.body.request_details +
-            " \r\n Helper Assigned \r\n " +
+            "\r\n Helper Assigned \r\n" +
             req.body.helperId +
-            " \r\n Status: \r\n" +
+            "\r\n Status: \r\n" +
             req.body.resolved,
         from: "no-reply@sender.com"
     };
-    students
+    requests
         .findById(req.body.creatorId)
         .then(student => {
             emailmsg.to = student.email ? student.email : "test@test.com";
@@ -100,29 +98,32 @@ router.get("/:id", validateRequestId, (req, res) => {
 
 router.delete("/:id", validateRequestId, (req, res) => {
     const id = req.params.id;
-
+    const emailmsg = {
+        to: "test@test.com",
+        subject: "Your Dev Desk Queue Help Request Ticket Has Been Deleted",
+        text: "Thank You for Sumbitting your request for assistance.\r\n Your ticket has been deleted from Dev Desk Queue, and will no longer be available for helpers to assign and resolve. We hope you found a solution to your issue. If you experiance this, or any issue in the future, Please feel free to submit another Dev Desk Queue Request Ticket.\r\n",
+        from: "no-reply@sender.com"
+    };
     requests
-        .remove(id)
+        .findById(id)
+        .then(student => {
+            emailmsg.to = student.email ? student.email : "test@test.com";
+            requests
+                .remove(id)
+                .then(request => {
+                    sgMail.setApiKey(secrets.sendgridkey);
+                    sgMail.send(emailmsg);
+                    res.status(201).json(request);
+                })
 
-    .then(request => {
-        if (request) {
-            res.status(200).json(request);
-        } else {
-            res.status(404).json({
-                errorMessage: "The request with the specified ID does not exist."
+            .catch(err => {
+                console.log(err);
+
+                res.status(500).json({ message: "Error deleteing Request" });
             });
-        }
-    })
-
-    .catch(error => {
-        console.log("error on DELETE /api/requests/:id", error);
-
-        res.status(500).json({
-            errorMessage: "The request could not be removed"
-        });
-    });
+        })
+        .catch(err => res.status(500).json({ message: "Error fetching student" }));
 });
-
 router.put("/:id", validateRequestId, (req, res) => {
     const id = req.params.id;
     const builtrequest = {
@@ -135,25 +136,23 @@ router.put("/:id", validateRequestId, (req, res) => {
         helperId: req.body.helperId,
         resolved: req.body.resolved
     };
-
-    const sgMail = require("@sendgrid/mail");
     const emailmsg = {
         to: "test@test.com",
-        subject: "Dev Desk Help Request Ticket Updated!",
-        text: "Thank You for Sumbitting your request for assistance. An update has been made to your Dev Desk Request. Please see the updated details of your request below: \r\n" +
+        subject: "Your Dev Desk Queue Help Request Ticket Has Been Updated!",
+        text: "Thank You for Sumbitting your request for assistance.\r\n An update has been made to your Dev Desk Queue request ticket. Please see the updated details of your request below:\r\n" +
             "\r\n Title: \r\n" +
             req.body.request_title +
             "\r\n Date:  \r\n" +
             req.body.request_date +
             "\r\n Deatils: \r\n" +
             req.body.request_details +
-            " \r\n Helper Assigned \r\n " +
+            "\r\n Helper Assigned \r\n" +
             req.body.helperId +
-            " \r\n Status: \r\n" +
+            "\r\n Status: \r\n" +
             req.body.resolved,
         from: "no-reply@sender.com"
     };
-    students
+    requests
         .findById(req.body.creatorId)
         .then(student => {
             emailmsg.to = student.email ? student.email : "test@test.com";
@@ -208,7 +207,6 @@ router.get("/:id/image", (req, res) => {
 router.post("/:id/email", (req, res) => {
     const requestid = req.params.id;
     const email = req.body;
-    const sgMail = require("@sendgrid/mail");
     req.body.request_id = requestid;
     requests
         .insertemail(req.body)
