@@ -1,4 +1,5 @@
 const requests = require("./request-model.js");
+const students = require("../students/students-model.js");
 const express = require("express");
 const secrets = require("../config/secrets.js");
 const { validateRequestId } = require("./request-middleware.js");
@@ -17,27 +18,43 @@ router.post("/", (req, res) => {
         helperId: req.body.helperId,
         resolved: req.body.resolved
     };
-    const studentid = req.body.creatorId;
+
     const sgMail = require("@sendgrid/mail");
     const emailmsg = {
-        to: "Joseph@chasingthefiks.net",
+        to: "test@test.com",
         subject: "Dev Desk Help Request Ticket Added!",
-        text: "Thank You for Sumbitting your request for assistance, A helper will be in contact shortly. Included below is the contents of your ticket",
+        text: "Thank You for Sumbitting your request for assistance, A helper will be in contact shortly. Included below is the contents of your ticket: \r\n" +
+            "\r\n Title: \r\n" +
+            req.body.request_title +
+            "\r\n Date:  \r\n" +
+            req.body.request_date +
+            "\r\n Deatils: \r\n" +
+            req.body.request_details +
+            " \r\n Helper Assigned \r\n " +
+            req.body.helperId +
+            " \r\n Status: \r\n" +
+            req.body.resolved,
         from: "no-reply@sender.com"
     };
-    requests
-        .insert(builtrequest)
-        .then(request => {
-            sgMail.setApiKey(secrets.sendgridkey);
-            sgMail.send(emailmsg);
-            res.status(201).json(request);
+    students
+        .findById(req.body.creatorId)
+        .then(student => {
+            emailmsg.to = student.email ? student.email : "test@test.com";
+            requests
+                .insert(builtrequest)
+                .then(request => {
+                    sgMail.setApiKey(secrets.sendgridkey);
+                    sgMail.send(emailmsg);
+                    res.status(201).json(request);
+                })
+
+            .catch(err => {
+                console.log(err);
+
+                res.status(500).json({ message: "Error adding Request" });
+            });
         })
-
-    .catch(err => {
-        console.log(err);
-
-        res.status(500).json({ message: "Error adding Request" });
-    });
+        .catch(err => res.status(500).json({ message: "Error fetching student" }));
 });
 router.get("/", (req, res) => {
     requests
@@ -108,37 +125,54 @@ router.delete("/:id", validateRequestId, (req, res) => {
 
 router.put("/:id", validateRequestId, (req, res) => {
     const id = req.params.id;
+    const builtrequest = {
+        request_category: req.body.request_category,
+        request_date: req.body.request_date,
+        request_title: req.body.request_title,
+        request_details: req.body.request_details,
+        request_stepstaken: req.body.request_stepstaken,
+        creatorId: req.body.creatorId,
+        helperId: req.body.helperId,
+        resolved: req.body.resolved
+    };
 
-    const data = req.body;
+    const sgMail = require("@sendgrid/mail");
+    const emailmsg = {
+        to: "test@test.com",
+        subject: "Dev Desk Help Request Ticket Updated!",
+        text: "Thank You for Sumbitting your request for assistance. An update has been made to your Dev Desk Request. Please see the updated details of your request below: \r\n" +
+            "\r\n Title: \r\n" +
+            req.body.request_title +
+            "\r\n Date:  \r\n" +
+            req.body.request_date +
+            "\r\n Deatils: \r\n" +
+            req.body.request_details +
+            " \r\n Helper Assigned \r\n " +
+            req.body.helperId +
+            " \r\n Status: \r\n" +
+            req.body.resolved,
+        from: "no-reply@sender.com"
+    };
+    students
+        .findById(req.body.creatorId)
+        .then(student => {
+            emailmsg.to = student.email ? student.email : "test@test.com";
+            requests
+                .update(id, builtrequest)
+                .then(request => {
+                    sgMail.setApiKey(secrets.sendgridkey);
+                    sgMail.send(emailmsg);
+                    res.status(201).json(request);
+                })
 
-    if (!data) {
-        res.status(400).json({
-            errorMessage: "Please provide updated data for the request."
-        });
-    } else {
-        requests
-            .update(id, data)
+            .catch(err => {
+                console.log(err);
 
-        .then(request => {
-            if (request) {
-                res.status(200).json(data);
-            } else {
-                res.status(404).json({
-                    errorMessage: "The request with the specified ID does not exist."
-                });
-            }
-        })
-
-        .catch(error => {
-            console.log("error on PUT /api/requests/:id", error);
-
-            res.status(500).json({
-                errorMessage: "The request information could not be modified."
+                res.status(500).json({ message: "Error adding Request" });
             });
-        });
-    }
+        })
+        .catch(err => res.status(500).json({ message: "Error fetching student" }));
 });
-
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "./public/requests/images/");
