@@ -37,6 +37,12 @@ function getById(id) {
         .first();
 }
 
+function getByEmailId(id) {
+    return db("request_email")
+        .where({ id })
+        .first();
+}
+
 function findById(id) {
     return db("students")
         .where({ id })

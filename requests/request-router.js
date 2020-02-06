@@ -213,6 +213,7 @@ router.post("/:id/email", (req, res) => {
     const requestid = req.params.id;
     const email = req.body;
     req.body.request_id = requestid;
+    console.log(req.body);
     requests
         .insertemail(req.body)
 
