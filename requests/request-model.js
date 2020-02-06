@@ -7,7 +7,8 @@ module.exports = {
     update,
     remove,
     insertemail,
-    getRequestEmail
+    getRequestEmail,
+    getStudentEmail
 };
 
 function get() {
@@ -19,6 +20,12 @@ function getRequestEmail(id) {
         .join("request_email as e", "r.id", "e.request_id")
         .select("e.id", "e.to", "e.from", "e.subject", "e.text")
         .where("e.request_id", id);
+}
+
+function getStudentEmail(id) {
+    return db("students")
+        .select("email")
+        .where("id", id);
 }
 
 function getById(id) {

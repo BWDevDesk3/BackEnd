@@ -7,13 +7,31 @@ const axios = require("axios");
 const path = require("path");
 var multer = require("multer");
 router.post("/", (req, res) => {
-    console.log(req.body);
+    const builtrequest = {
+        request_category: req.body.request_category,
+        request_date: req.body.request_date,
+        request_title: req.body.request_title,
+        request_details: req.body.request_details,
+        request_stepstaken: req.body.request_stepstaken,
+        creatorId: req.body.creatorId,
+        helperId: req.body.helperId,
+        resolved: req.body.resolved
+    };
+    const studentid = req.body.creatorId;
+    const sgMail = require("@sendgrid/mail");
+    const emailmsg = {
+        to: "Joseph@chasingthefiks.net",
+        subject: "Dev Desk Help Request Ticket Added!",
+        text: "Thank You for Sumbitting your request for assistance, A helper will be in contact shortly. Included below is the contents of your ticket",
+        from: "no-reply@sender.com"
+    };
     requests
-        .insert(req.body)
-
-    .then(request => {
-        res.status(201).json(request);
-    })
+        .insert(builtrequest)
+        .then(request => {
+            sgMail.setApiKey(secrets.sendgridkey);
+            sgMail.send(emailmsg);
+            res.status(201).json(request);
+        })
 
     .catch(err => {
         console.log(err);
