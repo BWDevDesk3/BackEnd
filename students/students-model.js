@@ -48,5 +48,6 @@ function getStudentRequests(id) {
             "r.helperId",
             "r.resolved"
         )
-        .where("r.creatorId", id);
+        .where("r.creatorId", id)
+        .orderBy("r.id", "asc");
 }

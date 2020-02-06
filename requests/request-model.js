@@ -13,20 +13,22 @@ module.exports = {
 };
 
 function get() {
-    return db("requests");
+    return db("requests").orderBy("id", "desc");
 }
 
 function getRequestEmail(id) {
     return db("requests as r")
         .join("request_email as e", "r.id", "e.request_id")
         .select("e.id", "e.to", "e.from", "e.subject", "e.text")
-        .where("e.request_id", id);
+        .where("e.request_id", id)
+        .orderBy("id", "desc");
 }
 
 function getStudentEmail(id) {
     return db("students")
         .select("email")
-        .where("id", id);
+        .where("id", id)
+        .orderBy("id", "desc");
 }
 
 function getById(id) {
