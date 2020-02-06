@@ -21,7 +21,7 @@ router.post("/", (req, res) => {
     const emailmsg = {
         to: "test@test.com",
         subject: "Dev Desk Help Request Ticket Submitted!",
-        text: "Thank You for Sumbitting your request for assistance! \r\n A helper will be in contact with you shortly. Included below is the contents of your Dev Desk Queue ticket: \r\n" +
+        text: "Thank You for Submitting your request for assistance! \r\n A helper will be in contact with you shortly. Included below is the contents of your Dev Desk Queue ticket: \r\n" +
             "\r\n Title: \r\n" +
             req.body.request_title +
             "\r\n Date:  \r\n" +
@@ -101,7 +101,7 @@ router.delete("/:id", validateRequestId, (req, res) => {
     const emailmsg = {
         to: "test@test.com",
         subject: "Your Dev Desk Queue Help Request Ticket Has Been Deleted",
-        text: "Thank You for Sumbitting your request for assistance.\r\n Your ticket has been deleted from Dev Desk Queue, and will no longer be available for helpers to assign and resolve. We hope you found a solution to your issue. If you experiance this, or any issue in the future, Please feel free to submit another Dev Desk Queue Request Ticket.\r\n",
+        text: "Thank You for Submitting your request for assistance.\r\n Your ticket has been deleted from Dev Desk Queue, and will no longer be available for helpers to assign and resolve. We hope you found a solution to your issue. If you experiance this, or any issue in the future, Please feel free to submit another Dev Desk Queue Request Ticket.\r\n",
         from: "no-reply@sender.com"
     };
     requests.getById(id).then(request => {
@@ -144,7 +144,7 @@ router.put("/:id", validateRequestId, (req, res) => {
     const emailmsg = {
         to: "test@test.com",
         subject: "Your Dev Desk Queue Help Request Ticket Has Been Updated!",
-        text: "Thank You for Sumbitting your request for assistance.\r\n An update has been made to your Dev Desk Queue request ticket. Please see the updated details of your request below:\r\n" +
+        text: "Thank You for Submitting your request for assistance.\r\n An update has been made to your Dev Desk Queue request ticket. Please see the updated details of your request below:\r\n" +
             "\r\n Title: \r\n" +
             req.body.request_title +
             "\r\n Date:  \r\n" +
