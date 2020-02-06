@@ -6,12 +6,23 @@ const Helpers = require("../helpers/helpers-model.js");
 const secrets = require("../config/secrets.js");
 
 router.post("/students/register", (req, res) => {
+    const requestid = req.params.id;
+    const email = req.body;
+    const sgMail = require("@sendgrid/mail");
     let student = req.body;
     const hash = bcrypt.hashSync(student.password, 10); // 2 ^ n
     student.password = hash;
-
     Students.add(student)
         .then(saved => {
+            req.body.to = saved.email;
+            req.body.subject = "Student Registration Complete!";
+            req.body.text =
+                "Thank You for Registering, your new Student username is: " +
+                req.body.username;
+            req.body.from = "no-reply@sender.com";
+            req.body.request_id = requestid;
+            sgMail.setApiKey(secrets.sendgridkey);
+            sgMail.send(email);
             res.status(201).json(saved);
         })
         .catch(error => {
@@ -49,9 +60,20 @@ router.post("/helpers/register", (req, res) => {
     let helper = req.body;
     const hash = bcrypt.hashSync(helper.password, 10); // 2 ^ n
     helper.password = hash;
-
+    const requestid = req.params.id;
+    const email = req.body;
+    const sgMail = require("@sendgrid/mail");
     Helpers.add(helper)
         .then(saved => {
+            req.body.to = saved.email;
+            req.body.subject = "Helper Registration Complete!";
+            req.body.text =
+                "Thank You for Registering, your new Helper username is: " +
+                req.body.username;
+            req.body.from = "no-reply@sender.com";
+            req.body.request_id = requestid;
+            sgMail.setApiKey(secrets.sendgridkey);
+            sgMail.send(email);
             res.status(201).json(saved);
         })
         .catch(error => {
