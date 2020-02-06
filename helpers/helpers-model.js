@@ -38,7 +38,7 @@ function getHelperRequests(id) {
             "r.id",
             "r.request_category",
             "r.request_date",
-            "request_title",
+            "r.request_title",
             "r.request_details",
             "r.request_stepstaken",
             "r.creatorid",
