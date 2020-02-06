@@ -10,7 +10,7 @@ POST Message body JSON:
 {“username”:”username_value”, “password”:”password_value”}
 Information:
 The username is stored in the students table, and the password is hashed using a salted algorithm, and stored as an encrypted string.
-
+An email is automatically generated and sent to the user.
 .post to https://devdeskdb.herokuapp.com/api/auth/students/login
 POST Message body JSON:
 {“username”:”username_value”, “password”:”password_value”}
@@ -75,11 +75,12 @@ Available HELPER Endpoints:
 POST Message body JSON:
 {“username”:”username_value”, “password”:”password_value”}
 The username is stored in the students table, and the password is hashed using a salted algorithm, and stored as an encrypted string.
+An email is automatically generated and sent to the user.
 .post to https://devdeskdb.herokuapp.com/api/auth/helpers/login
 POST Message body JSON:
 {“username”:”username_value”, “password”:”password_value”}
 The username is used to search for a HELPERS record. If a record is found, the password is validated to the salted/hashed password stored in the DB. Upon successful validation, a Json Web Token is generated, and returned the client.
-
+An email is automatically generated and sent to the user.
 .get to https://devdeskdb.herokuapp.com/api/helpers
 GET Message Header:
 {“authorization”:”TOKEN_VALUE”}
@@ -140,7 +141,7 @@ POST Message body JSON:
 {“request_category”:”Cat_ID”, “request_title”:”title_value”. “request_stepstaken”:”steps_taken”,“request_date”:”date_value”, “request_details”:”details_value”, “creatorId”:”STUDENT_ID”}
 Information:
 Authorization via valid JWT token is required on this endpoint. Post to this endpoint stores a record in the “Requests” table. Cat_ID should a record from the “RequestCategory” table. “Creatorid” should match a record in the “STUDENTS” Table.
-
+An email is automatically generated and sent to the user.
 .get to https://devdeskdb.herokuapp.com/api/requests
 GET Message Header:
 {“authorization”:”TOKEN_VALUE”}
@@ -174,7 +175,7 @@ Response body JSON Array:
 NONE
 Information:
 Authorization via valid JWT token is required on this endpoint. UPDATES records in the REQUESTS Table Based on the ID_Value included in the API get request for a particular REQUEST. helperid is an optional field, and does not default. Should contain the id value from the helpers table. Resolved is a Boolean field with a default value of 0. Submission of this value is not required.
-
+An email is automatically generated and sent to the user.
 .delete to https://devdeskdb.herokuapp.com/api/requests/:id
 DELETE Message Parameters:
 api/requests/id_value 
@@ -186,6 +187,7 @@ Response body JSON Array:
 {DeletedID}
 Information:
 Authorization via valid JWT token is required on this endpoint. UPDATES records in the REQUESTS Table Based on the ID_Value included in the API get request for a particular REQUEST.
+An email is automatically generated and sent to the user.
 .post to https://devdeskdb.herokuapp.com/api/requests/:id/image/
 POSTMessage Parameters:
 requests/{REQUEST_id_value}/image 
