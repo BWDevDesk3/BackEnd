@@ -21,7 +21,7 @@ function getRequestEmail(id) {
         .join("request_email as e", "r.id", "e.request_id")
         .select("e.id", "e.to", "e.from", "e.subject", "e.text", "e.html")
         .where("e.request_id", id)
-        .orderBy("id", "desc");
+        .orderBy("r.id", "desc");
 }
 
 function getStudentEmail(id) {
