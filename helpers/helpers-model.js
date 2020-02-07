@@ -8,7 +8,8 @@ module.exports = {
     findBy,
 
     findById,
-    getHelperRequests
+    getHelperRequests,
+    update
 };
 
 function find() {
@@ -29,6 +30,12 @@ function findById(id) {
     return db("helpers")
         .where({ id })
         .first();
+}
+
+function update(id, changes) {
+    return db("helpers")
+        .where({ id })
+        .update(changes);
 }
 
 function getHelperRequests(id) {

@@ -74,6 +74,15 @@ router.post("/:id/image", upload.single("file"), function(req, res, next) {
             req.file.filename
     });
 });
+router.put("/:id", validateHelperId, (req, res) => {
+    const id = req.params.id;
+    Helpers.update(id, req.body)
+        .then(res.status(201).json({ message: "updated" }))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: "error updating Helper", err });
+        });
+});
 router.get("/:id/image", (req, res) => {
     const id = req.params.id;
     res.sendFile(
