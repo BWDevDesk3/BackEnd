@@ -49,7 +49,7 @@ router.get("/:id/", validateStudentId, (req, res) => {
         });
     });
 });
-router.put("/:id", validateRequestId, (req, res) => {
+router.put("/:id", (req, res) => {
     const id = req.params.id;
     router
         .update(id, req.body)
