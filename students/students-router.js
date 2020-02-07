@@ -34,13 +34,11 @@ router.get("/:id/", validateStudentId, (req, res) => {
     Students.findById(id)
 
     .then(student => {
-        res
-            .status(200)
-            .json({
-                studentid: student.id,
-                username: student.username,
-                email: student.email
-            });
+        res.status(200).json({
+            studentid: student.id,
+            username: student.username,
+            email: student.email
+        });
     })
 
     .catch(err => {
@@ -51,7 +49,17 @@ router.get("/:id/", validateStudentId, (req, res) => {
         });
     });
 });
-
+router.put("/:id", validateRequestId, (req, res) => {
+    const id = req.params.id;
+    router
+        .update(id, req.body)
+        .then(res => {
+            res.status(200).Json({ message: "Updated!", res });
+        })
+        .catch(err => {
+            res.status(500).json({ message: "error updating student", err });
+        });
+});
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "./public/students/images/");

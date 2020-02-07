@@ -6,7 +6,8 @@ module.exports = {
     findBy,
     findById,
     getStudentRequests,
-    addimage
+    addimage,
+    update
 };
 
 function find() {
@@ -27,6 +28,12 @@ function findById(id) {
     return db("students")
         .where({ id })
         .first();
+}
+
+function update(id, changes) {
+    return db("students")
+        .where({ id })
+        .update(changes);
 }
 
 function addimage(id, file) {
